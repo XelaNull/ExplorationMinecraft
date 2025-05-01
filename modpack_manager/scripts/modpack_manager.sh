@@ -6,6 +6,9 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 PROJECT_ROOT="$( cd "$SCRIPT_DIR/.." &> /dev/null && pwd )"
 
+# Source the PYTHONPATH setup script
+source "$SCRIPT_DIR/export_pythonpath.sh" > /dev/null
+
 # Configuration
 PYTHON_CMD="python"  # Will be dynamically determined
 LIB_DIR="$SCRIPT_DIR/lib"
@@ -239,83 +242,83 @@ function main() {
         
         # Profile Management
         create)
-            $PYTHON_CMD "$SCRIPT_DIR/commands/create_profile.py" "$@"
+            PYTHONPATH="$SCRIPT_DIR:$PYTHONPATH" $PYTHON_CMD "$SCRIPT_DIR/commands/create_profile.py" "$@"
             ;;
         
         delete)
-            $PYTHON_CMD "$SCRIPT_DIR/commands/delete_profile.py" "$@"
+            PYTHONPATH="$SCRIPT_DIR:$PYTHONPATH" $PYTHON_CMD "$SCRIPT_DIR/commands/delete_profile.py" "$@"
             ;;
         
         list)
-            $PYTHON_CMD "$SCRIPT_DIR/commands/list_profiles.py" "$@"
+            PYTHONPATH="$SCRIPT_DIR:$PYTHONPATH" $PYTHON_CMD "$SCRIPT_DIR/commands/list_profiles.py" "$@"
             ;;
         
         show)
-            $PYTHON_CMD "$SCRIPT_DIR/commands/show_profile.py" "$@"
+            PYTHONPATH="$SCRIPT_DIR:$PYTHONPATH" $PYTHON_CMD "$SCRIPT_DIR/commands/show_profile.py" "$@"
             ;;
         
         # Mod Management
         search)
-            $PYTHON_CMD "$SCRIPT_DIR/commands/search_mods.py" "$@"
+            PYTHONPATH="$SCRIPT_DIR:$PYTHONPATH" $PYTHON_CMD "$SCRIPT_DIR/commands/search_mods.py" "$@"
             ;;
         
         add)
-            $PYTHON_CMD "$SCRIPT_DIR/commands/add_mod.py" "$@"
+            PYTHONPATH="$SCRIPT_DIR:$PYTHONPATH" $PYTHON_CMD "$SCRIPT_DIR/commands/add_mod.py" "$@"
             ;;
         
         remove)
-            $PYTHON_CMD "$SCRIPT_DIR/commands/remove_mod.py" "$@"
+            PYTHONPATH="$SCRIPT_DIR:$PYTHONPATH" $PYTHON_CMD "$SCRIPT_DIR/commands/remove_mod.py" "$@"
             ;;
         
         list-mods)
-            $PYTHON_CMD "$SCRIPT_DIR/commands/list_mods.py" "$@"
+            PYTHONPATH="$SCRIPT_DIR:$PYTHONPATH" $PYTHON_CMD "$SCRIPT_DIR/commands/list_mods.py" "$@"
             ;;
         
         # Data Pack Management
         add-datapack)
-            $PYTHON_CMD "$SCRIPT_DIR/commands/add_datapack.py" "$@"
+            PYTHONPATH="$SCRIPT_DIR:$PYTHONPATH" $PYTHON_CMD "$SCRIPT_DIR/commands/add_datapack.py" "$@"
             ;;
         
         remove-datapack)
-            $PYTHON_CMD "$SCRIPT_DIR/commands/remove_datapack.py" "$@"
+            PYTHONPATH="$SCRIPT_DIR:$PYTHONPATH" $PYTHON_CMD "$SCRIPT_DIR/commands/remove_datapack.py" "$@"
             ;;
         
         list-datapacks)
-            $PYTHON_CMD "$SCRIPT_DIR/commands/list_datapacks.py" "$@"
+            PYTHONPATH="$SCRIPT_DIR:$PYTHONPATH" $PYTHON_CMD "$SCRIPT_DIR/commands/list_datapacks.py" "$@"
             ;;
         
         check-datapacks)
-            $PYTHON_CMD "$SCRIPT_DIR/commands/check_datapacks.py" "$@"
+            PYTHONPATH="$SCRIPT_DIR:$PYTHONPATH" $PYTHON_CMD "$SCRIPT_DIR/commands/check_datapacks.py" "$@"
             ;;
         
         # Package Management
         download)
-            $PYTHON_CMD "$SCRIPT_DIR/commands/download_mods.py" "$@"
+            PYTHONPATH="$SCRIPT_DIR:$PYTHONPATH" $PYTHON_CMD "$SCRIPT_DIR/commands/download_mods.py" "$@"
             ;;
         
         package)
-            $PYTHON_CMD "$SCRIPT_DIR/commands/create_client_pack.py" "$@"
+            PYTHONPATH="$SCRIPT_DIR:$PYTHONPATH" $PYTHON_CMD "$SCRIPT_DIR/commands/create_client_pack.py" "$@"
             ;;
         
         create-server-pack)
-            $PYTHON_CMD "$SCRIPT_DIR/commands/create_server_pack.py" "$@"
+            PYTHONPATH="$SCRIPT_DIR:$PYTHONPATH" $PYTHON_CMD "$SCRIPT_DIR/commands/create_server_pack.py" "$@"
             ;;
         
         check-updates)
-            $PYTHON_CMD "$SCRIPT_DIR/commands/check_updates.py" "$@"
+            PYTHONPATH="$SCRIPT_DIR:$PYTHONPATH" $PYTHON_CMD "$SCRIPT_DIR/commands/check_updates.py" "$@"
             ;;
         
         update)
-            $PYTHON_CMD "$SCRIPT_DIR/commands/update_profile.py" "$@"
+            PYTHONPATH="$SCRIPT_DIR:$PYTHONPATH" $PYTHON_CMD "$SCRIPT_DIR/commands/update_profile.py" "$@"
             ;;
         
         resolve-dependencies)
-            $PYTHON_CMD "$SCRIPT_DIR/commands/resolve_dependencies.py" "$@"
+            PYTHONPATH="$SCRIPT_DIR:$PYTHONPATH" $PYTHON_CMD "$SCRIPT_DIR/commands/resolve_dependencies.py" "$@"
             ;;
         
         # Server Management
         deploy|test|status|start|stop|restart|logs|backup|restore)
-            $PYTHON_CMD "$SCRIPT_DIR/commands/server_management.py" "$COMMAND" "$@"
+            PYTHONPATH="$SCRIPT_DIR:$PYTHONPATH" $PYTHON_CMD "$SCRIPT_DIR/commands/server_management.py" "$COMMAND" "$@"
             ;;
         
         *)

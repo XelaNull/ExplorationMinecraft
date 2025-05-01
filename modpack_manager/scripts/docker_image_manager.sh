@@ -9,6 +9,9 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 ROOT_DIR="$(dirname "$SCRIPT_DIR")"
 PROJECT_ROOT="$(dirname "$ROOT_DIR")"
 
+# Set up Python environment
+source "$SCRIPT_DIR/export_pythonpath.sh" > /dev/null
+
 # Default values
 DOCKERFILE="$ROOT_DIR/server_pack/Dockerfile"
 SERVER_PACK_DIR="$ROOT_DIR/server_pack"

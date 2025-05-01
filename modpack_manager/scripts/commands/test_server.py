@@ -22,9 +22,9 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 lib_dir = os.path.join(os.path.dirname(script_dir), 'lib')
 sys.path.insert(0, lib_dir)
 
-from core.profile_manager import ProfileManager
-from core.server_manager import ServerManager
-from core.log_analyzer import LogAnalyzer
+from lib.core.profile_manager import ProfileManager
+from lib.core.server_manager import ServerManager
+from lib.core.log_analyzer import LogAnalyzer
 
 # Set up logging
 logging.basicConfig(

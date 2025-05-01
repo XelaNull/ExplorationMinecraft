@@ -2,7 +2,18 @@
 # Run server script for ExplorationMinecraft
 # This script will download all mods, build a Docker image, and start the server
 
+# Enable strict error handling
 set -e
+
+# Error handling function
+function handle_error {
+    echo "ERROR: An error occurred on line $1"
+    echo "Please check the output above for specific error messages"
+    exit 1
+}
+
+# Set up error trap
+trap 'handle_error $LINENO' ERR
 
 # Directory setup
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -13,6 +24,9 @@ PROFILE_NAME="exploration_modpack"
 echo "===== ExplorationMinecraft Server Setup ====="
 echo "This script will set up and run the Minecraft server with all required mods."
 echo "Starting from directory: $ROOT_DIR"
+
+# Source the PYTHONPATH setup script
+source "$SCRIPTS_DIR/export_pythonpath.sh" > /dev/null
 
 # Step 1: Create required directories if they don't exist
 echo -e "\n[1/6] Creating required directories..."

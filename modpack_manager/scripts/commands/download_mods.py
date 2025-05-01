@@ -14,9 +14,9 @@ import argparse
 lib_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'lib'))
 sys.path.append(lib_path)
 
-from core.profile_manager import ProfileManager
-from core.downloader import ModDownloader
-from core.mod_search import ModSearch
+from lib.core.profile_manager import ProfileManager
+from lib.core.downloader import ModDownloader
+from lib.core.mod_search import ModSearch
 from utils import config
 
 def main():

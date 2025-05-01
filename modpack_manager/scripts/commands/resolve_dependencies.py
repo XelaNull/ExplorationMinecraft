@@ -13,8 +13,9 @@ import argparse
 lib_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'lib'))
 sys.path.append(lib_path)
 
-from core.profile_manager import ProfileManager
-from core.dependency_resolver import DependencyResolver
+# Import modules from the proper paths
+from lib.core.profile_manager import ProfileManager
+from lib.core.dependency_resolver import DependencyResolver
 
 def main():
     """Handle resolving dependencies for a profile."""

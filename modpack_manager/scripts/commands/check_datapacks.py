@@ -13,9 +13,9 @@ import argparse
 lib_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'lib'))
 sys.path.append(lib_path)
 
-from core.profile_manager import ProfileManager
-from core.mod_search import ModSearch
-from core.dependency_resolver import DependencyResolver
+from lib.core.profile_manager import ProfileManager
+from lib.core.mod_search import ModSearch
+from lib.core.dependency_resolver import DependencyResolver
 
 def main():
     """Handle checking for compatible datapacks."""

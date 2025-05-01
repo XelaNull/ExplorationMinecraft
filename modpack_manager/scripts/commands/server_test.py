@@ -131,9 +131,9 @@ def main():
     lib_dir = os.path.join(script_dir, "..", "lib")
     sys.path.insert(0, os.path.abspath(lib_dir))
     
-    from core.profile_manager import ProfileManager
-    from core.server_manager import ServerManager
-    from core.log_analyzer import LogAnalyzer
+    from lib.core.profile_manager import ProfileManager
+    from lib.core.server_manager import ServerManager
+    from lib.core.log_analyzer import LogAnalyzer
     
     # Check if profile exists
     profile_manager = ProfileManager()

@@ -13,8 +13,8 @@ import argparse
 lib_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'lib'))
 sys.path.append(lib_path)
 
-from core.profile_manager import ProfileManager
-from core.mod_search import ModSearch
+from lib.core.profile_manager import ProfileManager
+from lib.core.mod_search import ModSearch
 
 def main():
     """Handle listing mods in a profile."""
