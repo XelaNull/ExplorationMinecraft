@@ -13,9 +13,18 @@ import argparse
 lib_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'lib'))
 sys.path.append(lib_path)
 
+# Fix path for direct imports
+sys.path.append(os.path.dirname(lib_path))
+
 # Import modules from the proper paths
-from lib.core.profile_manager import ProfileManager
-from lib.core.dependency_resolver import DependencyResolver
+try:
+    # First try the relative import approach
+    from core.profile_manager import ProfileManager
+    from core.dependency_resolver import DependencyResolver
+except ImportError:
+    # Fall back to direct import if needed
+    from lib.core.profile_manager import ProfileManager
+    from lib.core.dependency_resolver import DependencyResolver
 
 def main():
     """Handle resolving dependencies for a profile."""
