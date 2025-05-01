@@ -19,9 +19,9 @@ from datetime import datetime, timedelta
 
 # Add parent directory to path for imports
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from lib.core.profile_manager import ProfileManager
-from lib.core.server_manager import ServerManager
-from lib.core.log_analyzer import LogAnalyzer
+from core.profile_manager import ProfileManager
+from core.server_manager import ServerManager
+from core.log_analyzer import LogAnalyzer
 
 # Set up logging
 logging.basicConfig(
