@@ -313,7 +313,7 @@ function main() {
             ;;
         
         resolve-dependencies)
-            PYTHONPATH="$SCRIPT_DIR:$PYTHONPATH" $PYTHON_CMD "$SCRIPT_DIR/commands/resolve_dependencies.py" "$@"
+            PYTHONPATH="$SCRIPT_DIR:$SCRIPT_DIR/lib:$PYTHONPATH" $PYTHON_CMD "$SCRIPT_DIR/commands/resolve_dependencies.py" "$@"
             ;;
         
         # Server Management

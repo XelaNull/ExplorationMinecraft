@@ -1,28 +1,80 @@
 #!/bin/bash
-# Script to fix import issues in Python scripts
+# fix_imports.sh: Fix Python import paths for the ExplorationMinecraft modpack manager
+# This ensures the core modules can be found in any Python environment
 
-COMMANDS_DIR="modpack_manager/scripts/commands"
+set -e
 
-# Check if the commands directory exists
-if [ ! -d "$COMMANDS_DIR" ]; then
-    echo "Error: Commands directory not found at $COMMANDS_DIR"
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+MODPACK_DIR="$ROOT_DIR/modpack_manager"
+SCRIPTS_DIR="$MODPACK_DIR/scripts"
+VENV_DIR="$MODPACK_DIR/.venv"
+
+echo "Fixing Python import paths for ExplorationMinecraft..."
+
+# Check if the virtual environment exists
+if [ ! -d "$VENV_DIR" ]; then
+    echo "Error: Virtual environment not found at $VENV_DIR"
+    echo "Run ./run_server.sh first to create the virtual environment."
     exit 1
 fi
 
-echo "Fixing import statements in Python scripts..."
+# Find the Python version directory
+PY_DIRS=$(find "$VENV_DIR/lib" -type d -name "python*" | sort)
 
-# Loop through all Python files in the commands directory
-for file in "$COMMANDS_DIR"/*.py; do
-    if [ -f "$file" ]; then
-        echo "Processing $file"
-        
-        # Use sed to replace 'from core.' with 'from lib.core.'
-        sed -i.bak 's/from core\./from lib.core./g' "$file"
-        
-        # Remove backup files
-        rm -f "$file.bak"
+if [ -z "$PY_DIRS" ]; then
+    echo "Error: Could not find Python directory in $VENV_DIR/lib"
+    echo "Try deleting the .venv directory and running ./run_server.sh again."
+    exit 1
+fi
+
+for PY_DIR in $PY_DIRS; do
+    SITE_PACKAGES="$PY_DIR/site-packages"
+    if [ -d "$SITE_PACKAGES" ]; then
+        echo "Creating .pth file in $SITE_PACKAGES..."
+        echo "$SCRIPTS_DIR/lib" > "$SITE_PACKAGES/modpack_paths.pth"
+        echo "$SCRIPTS_DIR" >> "$SITE_PACKAGES/modpack_paths.pth"
+        echo "Created modpack_paths.pth in $SITE_PACKAGES"
     fi
 done
 
-echo "Import fixing complete."
-echo "Remember to also run the scripts with PYTHONPATH set to include the lib directory."
+# Create symlinks if .pth approach doesn't work
+echo "Setting up fallback symlinks..."
+mkdir -p "$VENV_DIR/lib/python3/site-packages/core"
+ln -sf "$SCRIPTS_DIR/lib/core"/* "$VENV_DIR/lib/python3/site-packages/core/" 2>/dev/null || true
+
+# Print Python path to verify
+echo -e "\nTesting Python path..."
+source "$SCRIPTS_DIR/export_pythonpath.sh"
+echo "PYTHONPATH is now: $PYTHONPATH"
+
+echo -e "\nVerifying import..."
+if [ -f "$VENV_DIR/bin/python" ]; then
+    VENV_PYTHON="$VENV_DIR/bin/python"
+elif [ -f "$VENV_DIR/bin/python3" ]; then
+    VENV_PYTHON="$VENV_DIR/bin/python3"
+else
+    VENV_PYTHON=$(find "$VENV_DIR/bin" -name "python*" | head -n 1)
+fi
+
+# Test if imports work
+if [ ! -z "$VENV_PYTHON" ]; then
+    echo "Using Python: $VENV_PYTHON"
+    IMPORT_TEST=$($VENV_PYTHON -c "
+import sys
+print('Python path:')
+for p in sys.path:
+    print(f'  {p}')
+print('\\nTrying import...')
+try:
+    from core.profile_manager import ProfileManager
+    print('SUCCESS: Core modules can be imported!')
+except ImportError as e:
+    print(f'ERROR: {e}')
+    sys.exit(1)
+")
+    echo "$IMPORT_TEST"
+else
+    echo "Warning: Could not find Python interpreter in virtual environment"
+fi
+
+echo -e "\nImport paths fixed. Please run ./run_server.sh to start the server."

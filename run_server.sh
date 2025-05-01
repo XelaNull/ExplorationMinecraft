@@ -28,6 +28,35 @@ echo "Starting from directory: $ROOT_DIR"
 # Source the PYTHONPATH setup script
 source "$SCRIPTS_DIR/export_pythonpath.sh" > /dev/null
 
+# Create a symlink to the lib directory in the virtual environment to ensure imports work
+VENV_DIR="$MODPACK_DIR/.venv"
+if [ -d "$VENV_DIR" ]; then
+    # Get Python version
+    if [ -d "$VENV_DIR/lib/python3.9" ]; then
+        PY_VERSION="3.9"
+    elif [ -d "$VENV_DIR/lib/python3.8" ]; then
+        PY_VERSION="3.8"
+    elif [ -d "$VENV_DIR/lib/python3.7" ]; then
+        PY_VERSION="3.7"
+    elif [ -d "$VENV_DIR/lib/python3.10" ]; then
+        PY_VERSION="3.10"
+    elif [ -d "$VENV_DIR/lib/python3.11" ]; then
+        PY_VERSION="3.11"
+    else
+        # Find any Python directory
+        PY_VERSION=$(ls -1 "$VENV_DIR/lib" | grep "python3" | head -n 1)
+    fi
+    
+    if [ ! -z "$PY_VERSION" ]; then
+        SITE_PACKAGES="$VENV_DIR/lib/$PY_VERSION/site-packages"
+        if [ -d "$SITE_PACKAGES" ]; then
+            # Create .pth file to add lib directory to Python path
+            echo "$SCRIPTS_DIR/lib" > "$SITE_PACKAGES/modpack_paths.pth"
+            echo "$SCRIPTS_DIR" >> "$SITE_PACKAGES/modpack_paths.pth"
+        fi
+    fi
+fi
+
 # Step 1: Create required directories if they don't exist
 echo -e "\n[1/6] Creating required directories..."
 mkdir -p "$MODPACK_DIR/modpack_cache"
@@ -39,7 +68,7 @@ mkdir -p "$MODPACK_DIR/server_pack/datapacks"
 
 # Step 2: Resolve mod dependencies from the profile
 echo -e "\n[2/6] Resolving mod dependencies..."
-$SCRIPTS_DIR/modpack_manager.sh resolve-dependencies --profile $PROFILE_NAME
+PYTHONPATH="$SCRIPTS_DIR/lib:$SCRIPTS_DIR:$PYTHONPATH" $SCRIPTS_DIR/modpack_manager.sh resolve-dependencies --profile $PROFILE_NAME
 
 # Step 3: Download all mods
 echo -e "\n[3/6] Downloading all mods..."
