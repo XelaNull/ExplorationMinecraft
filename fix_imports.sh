@@ -34,13 +34,23 @@ for PY_DIR in $PY_DIRS; do
         echo "$SCRIPTS_DIR/lib" > "$SITE_PACKAGES/modpack_paths.pth"
         echo "$SCRIPTS_DIR" >> "$SITE_PACKAGES/modpack_paths.pth"
         echo "Created modpack_paths.pth in $SITE_PACKAGES"
+        
+        # Copy core module directly into site-packages (most reliable approach)
+        echo "Copying core module to $SITE_PACKAGES..."
+        CORE_DEST="$SITE_PACKAGES/core"
+        mkdir -p "$CORE_DEST" 2>/dev/null || true
+        
+        # Copy all Python files
+        cp -f "$SCRIPTS_DIR/lib/core"/*.py "$CORE_DEST/" 2>/dev/null || true
+        
+        # Create __init__.py if it doesn't exist
+        if [ ! -f "$CORE_DEST/__init__.py" ]; then
+            echo '"""Core module for the Minecraft modpack manager."""' > "$CORE_DEST/__init__.py"
+        fi
+        
+        echo "Copied all core modules to $CORE_DEST"
     fi
 done
-
-# Create symlinks if .pth approach doesn't work
-echo "Setting up fallback symlinks..."
-mkdir -p "$VENV_DIR/lib/python3/site-packages/core"
-ln -sf "$SCRIPTS_DIR/lib/core"/* "$VENV_DIR/lib/python3/site-packages/core/" 2>/dev/null || true
 
 # Print Python path to verify
 echo -e "\nTesting Python path..."

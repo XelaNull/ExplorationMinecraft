@@ -42,13 +42,22 @@ if [ -d "$VENV_DIR" ]; then
                 echo "Creating .pth file in $SITE_PACKAGES..."
                 echo "$SCRIPTS_DIR/lib" > "$SITE_PACKAGES/modpack_paths.pth"
                 echo "$SCRIPTS_DIR" >> "$SITE_PACKAGES/modpack_paths.pth"
+                
+                # Copy core module directly into site-packages (most reliable approach)
+                echo "Copying core module to $SITE_PACKAGES..."
+                CORE_DEST="$SITE_PACKAGES/core"
+                mkdir -p "$CORE_DEST" 2>/dev/null || true
+                
+                # Copy all Python files
+                cp -f "$SCRIPTS_DIR/lib/core"/*.py "$CORE_DEST/" 2>/dev/null || true
+                
+                # Create __init__.py if it doesn't exist
+                if [ ! -f "$CORE_DEST/__init__.py" ]; then
+                    echo '"""Core module for the Minecraft modpack manager."""' > "$CORE_DEST/__init__.py"
+                fi
             fi
         done
     fi
-    
-    # Create a symlink as fallback
-    mkdir -p "$VENV_DIR/lib/python3/site-packages/core" 2>/dev/null || true
-    ln -sf "$SCRIPTS_DIR/lib/core"/* "$VENV_DIR/lib/python3/site-packages/core/" 2>/dev/null || true
 fi
 
 # Step 1: Create required directories if they don't exist
