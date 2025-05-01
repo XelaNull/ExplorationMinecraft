@@ -1,0 +1,31 @@
+services:
+  minecraft-server:
+    build:
+      context: ./modpack_manager/server_pack
+      dockerfile: Dockerfile
+    image: minecraft-exploration_modpack:latest
+    container_name: exploration_modpack_server
+    ports:
+      - "25565:25565"
+    volumes:
+      - ./modpack_manager/servers/exploration_modpack/data/world:/data/world
+      - ./modpack_manager/servers/exploration_modpack/data/logs:/data/logs
+      - ./modpack_manager/servers/exploration_modpack/data/crash-reports:/data/crash-reports
+      - ./modpack_manager/servers/exploration_modpack/data/banned-ips.json:/data/banned-ips.json
+      - ./modpack_manager/servers/exploration_modpack/data/banned-players.json:/data/banned-players.json
+      - ./modpack_manager/servers/exploration_modpack/data/usercache.json:/data/usercache.json
+    environment:
+      - EULA=TRUE
+      - MEMORY=4G
+      - TYPE=FORGE
+      - VERSION=1.20.1
+      - FORGE_VERSION=47.3.0
+      - ONLINE_MODE=true
+      - DIFFICULTY=normal
+      - ALLOW_NETHER=true
+      - ENABLE_COMMAND_BLOCK=true
+      - MAX_PLAYERS=10
+      - MOTD=Exploration Modpack Server
+    restart: unless-stopped
+    tty: true
+    stdin_open: true

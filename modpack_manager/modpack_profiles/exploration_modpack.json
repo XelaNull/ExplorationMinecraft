@@ -1,0 +1,230 @@
+{
+  "name": "exploration_modpack",
+  "minecraft_version": "1.20.1",
+  "loader": "forge",
+  "loader_version": "47.3.0",
+  "description": "Exploration modpack for Minecraft 1.20.1",
+  "created": "2025-04-27T22:52:57.949741",
+  "updated": "2025-04-30T07:55:51.726872",
+  "mods": [
+    {
+      "name": "Apotheosis",
+      "id": "313970",
+      "version": "latest",
+      "source": "curseforge",
+      "side": "both"
+    },
+    {
+      "name": "Create",
+      "id": "create",
+      "version": "xoKzmnen",
+      "source": "modrinth",
+      "side": "both"
+    },
+    {
+      "name": "Chipped",
+      "id": "chipped",
+      "version": "pi3f4er3",
+      "source": "modrinth",
+      "side": "both"
+    },
+    {
+      "name": "Chisels & Bits",
+      "id": "231095",
+      "version": "latest",
+      "source": "curseforge",
+      "side": "both"
+    },
+    {
+      "name": "Supplementaries",
+      "id": "supplementaries",
+      "version": "6ZGv77UX",
+      "source": "modrinth",
+      "side": "both"
+    },
+    {
+      "name": "Just Enough Items",
+      "id": "jei",
+      "version": "WTWP98yg",
+      "source": "modrinth",
+      "side": "both"
+    },
+    {
+      "name": "Quark",
+      "id": "quark",
+      "version": "DijQLauD",
+      "source": "modrinth",
+      "side": "both"
+    },
+    {
+      "name": "Alex's Mobs",
+      "id": "alexs-mobs",
+      "version": "XoIASRVU",
+      "source": "modrinth",
+      "side": "both"
+    },
+    {
+      "name": "Relics",
+      "id": "445274",
+      "version": "latest",
+      "source": "curseforge",
+      "side": "both"
+    },
+    {
+      "name": "L_Ender's Cataclysm",
+      "id": "551586",
+      "version": "latest",
+      "source": "curseforge",
+      "side": "both"
+    },
+    {
+      "name": "Dungeons and Taverns",
+      "id": "853794",
+      "version": "latest",
+      "source": "curseforge",
+      "side": "both"
+    },
+    {
+      "name": "Iron's Spells n Spellbooks",
+      "id": "855414",
+      "version": "latest",
+      "source": "curseforge",
+      "side": "both"
+    },
+    {
+      "name": "Alex's Caves",
+      "id": "alexs-caves",
+      "version": "lC8HHXOF",
+      "source": "modrinth",
+      "side": "both"
+    },
+    {
+      "name": "Sawmill",
+      "id": "964817",
+      "version": "latest",
+      "source": "curseforge",
+      "side": "both"
+    },
+    {
+      "name": "Terramity",
+      "id": "terramity",
+      "version": "cjrb1wmA",
+      "source": "modrinth",
+      "side": "both"
+    },
+    {
+      "name": "Citadel",
+      "id": "331936",
+      "version": 6002521,
+      "source": "curseforge",
+      "side": "both"
+    },
+    {
+      "name": "Moonlight Lib",
+      "id": "499980",
+      "version": 6474665,
+      "source": "curseforge",
+      "side": "both"
+    },
+    {
+      "name": "Zeta",
+      "id": "968868",
+      "version": 6432578,
+      "source": "curseforge",
+      "side": "both"
+    },
+    {
+      "name": "Resourceful Lib",
+      "id": "570073",
+      "version": 5659871,
+      "source": "curseforge",
+      "side": "both"
+    },
+    {
+      "name": "Curios API (Forge/NeoForge)",
+      "id": "309927",
+      "version": 6418456,
+      "source": "curseforge",
+      "side": "both"
+    },
+    {
+      "name": "GeckoLib",
+      "id": "388172",
+      "version": 6333474,
+      "source": "curseforge",
+      "side": "both"
+    },
+    {
+      "name": "Caelus API (Forge/NeoForge)",
+      "id": "308989",
+      "version": 5281700,
+      "source": "curseforge",
+      "side": "both"
+    },
+    {
+      "name": "Patchouli",
+      "id": "306770",
+      "version": 6164575,
+      "source": "curseforge",
+      "side": "both"
+    },
+    {
+      "name": "Placebo",
+      "id": "283644",
+      "version": 6274231,
+      "source": "curseforge",
+      "side": "both"
+    },
+    {
+      "name": "Jade \ud83d\udd0d",
+      "id": "324717",
+      "version": 6271651,
+      "source": "curseforge",
+      "side": "both"
+    },
+    {
+      "name": "Apothic Attributes (AttributesLib)",
+      "id": "898963",
+      "version": 5634071,
+      "source": "curseforge",
+      "side": "both"
+    },
+    {
+      "name": "playerAnimator",
+      "id": "658587",
+      "version": 4587214,
+      "source": "curseforge",
+      "side": "both"
+    },
+    {
+      "name": "Lionfish API",
+      "id": "1001614",
+      "version": 5922047,
+      "source": "curseforge",
+      "side": "both"
+    },
+    {
+      "name": "OctoLib",
+      "id": "916747",
+      "version": 6274623,
+      "source": "curseforge",
+      "side": "both"
+    },
+    {
+      "name": "Architectury API",
+      "id": "419699",
+      "version": 5137938,
+      "source": "curseforge",
+      "side": "both"
+    }
+  ],
+  "datapacks": [
+    {
+      "name": "Quark Oddities",
+      "id": "quark-oddities",
+      "version": "NrzERFzz",
+      "source": "modrinth"
+    }
+  ],
+  "dependencies": []
+}

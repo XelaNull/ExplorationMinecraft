@@ -1,0 +1,30 @@
+# Cursor AI Instructions for ExplorationMinecraft Modpack Manager
+
+## Code Structure Conventions
+- Python scripts follow PEP 8 style guidelines
+- Shell scripts follow Google's shell style guide
+- Use descriptive variable and function names
+- Comment complex logic and algorithms
+
+## File Organization
+- AISPEC/ - Technical documentation and AI reminders
+- DOCS/ - User documentation, usage instructions, and architecture
+- DEVJOURNAL/ - Development progress tracking with dated entries
+- modpack_manager/ - Main application code
+  - scripts/ - Shell scripts for management
+  - modpack_profiles/ - Profile configuration files
+  - modpack_cache/ - Downloaded mods
+  - client_packs/ - Generated client-side modpacks
+
+## Code Management
+- Always check for dependencies in existing code before suggesting new libraries
+- Prioritize Docker compatibility for all server components
+- Maintain Python 2.7 compatibility while supporting Python 3+
+- Handle API requests with proper error handling and retries
+- Keep code modular and maintainable
+
+## Project Goals
+- Focus on user experience and simplicity in CLI interface
+- Ensure robust mod dependency resolution
+- Prioritize automation of tedious tasks
+- Design for integration with Docker for server management 
