@@ -44,8 +44,8 @@ ln -sf "$SCRIPTS_DIR/lib/core"/* "$VENV_DIR/lib/python3/site-packages/core/" 2>/
 
 # Print Python path to verify
 echo -e "\nTesting Python path..."
-source "$SCRIPTS_DIR/export_pythonpath.sh"
-echo "PYTHONPATH is now: $PYTHONPATH"
+export PYTHONPATH="$SCRIPTS_DIR/lib:$SCRIPTS_DIR:$PYTHONPATH"
+echo "PYTHONPATH set to: $PYTHONPATH"
 
 echo -e "\nVerifying import..."
 if [ -f "$VENV_DIR/bin/python" ]; then

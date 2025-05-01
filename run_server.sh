@@ -25,36 +25,30 @@ echo "===== ExplorationMinecraft Server Setup ====="
 echo "This script will set up and run the Minecraft server with all required mods."
 echo "Starting from directory: $ROOT_DIR"
 
-# Source the PYTHONPATH setup script
-source "$SCRIPTS_DIR/export_pythonpath.sh" > /dev/null
+# Set up PYTHONPATH directly
+export PYTHONPATH="$SCRIPTS_DIR/lib:$SCRIPTS_DIR:$PYTHONPATH"
+echo "PYTHONPATH set to: $PYTHONPATH"
 
-# Create a symlink to the lib directory in the virtual environment to ensure imports work
+# Fix Python path for virtual environment
 VENV_DIR="$MODPACK_DIR/.venv"
 if [ -d "$VENV_DIR" ]; then
-    # Get Python version
-    if [ -d "$VENV_DIR/lib/python3.9" ]; then
-        PY_VERSION="3.9"
-    elif [ -d "$VENV_DIR/lib/python3.8" ]; then
-        PY_VERSION="3.8"
-    elif [ -d "$VENV_DIR/lib/python3.7" ]; then
-        PY_VERSION="3.7"
-    elif [ -d "$VENV_DIR/lib/python3.10" ]; then
-        PY_VERSION="3.10"
-    elif [ -d "$VENV_DIR/lib/python3.11" ]; then
-        PY_VERSION="3.11"
-    else
-        # Find any Python directory
-        PY_VERSION=$(ls -1 "$VENV_DIR/lib" | grep "python3" | head -n 1)
+    # Find Python version directory
+    PY_DIRS=$(find "$VENV_DIR/lib" -type d -name "python*" | sort)
+    
+    if [ ! -z "$PY_DIRS" ]; then
+        for PY_DIR in $PY_DIRS; do
+            SITE_PACKAGES="$PY_DIR/site-packages"
+            if [ -d "$SITE_PACKAGES" ]; then
+                echo "Creating .pth file in $SITE_PACKAGES..."
+                echo "$SCRIPTS_DIR/lib" > "$SITE_PACKAGES/modpack_paths.pth"
+                echo "$SCRIPTS_DIR" >> "$SITE_PACKAGES/modpack_paths.pth"
+            fi
+        done
     fi
     
-    if [ ! -z "$PY_VERSION" ]; then
-        SITE_PACKAGES="$VENV_DIR/lib/$PY_VERSION/site-packages"
-        if [ -d "$SITE_PACKAGES" ]; then
-            # Create .pth file to add lib directory to Python path
-            echo "$SCRIPTS_DIR/lib" > "$SITE_PACKAGES/modpack_paths.pth"
-            echo "$SCRIPTS_DIR" >> "$SITE_PACKAGES/modpack_paths.pth"
-        fi
-    fi
+    # Create a symlink as fallback
+    mkdir -p "$VENV_DIR/lib/python3/site-packages/core" 2>/dev/null || true
+    ln -sf "$SCRIPTS_DIR/lib/core"/* "$VENV_DIR/lib/python3/site-packages/core/" 2>/dev/null || true
 fi
 
 # Step 1: Create required directories if they don't exist
@@ -72,19 +66,19 @@ PYTHONPATH="$SCRIPTS_DIR/lib:$SCRIPTS_DIR:$PYTHONPATH" $SCRIPTS_DIR/modpack_mana
 
 # Step 3: Download all mods
 echo -e "\n[3/6] Downloading all mods..."
-$SCRIPTS_DIR/modpack_manager.sh download --profile $PROFILE_NAME
+PYTHONPATH="$SCRIPTS_DIR/lib:$SCRIPTS_DIR:$PYTHONPATH" $SCRIPTS_DIR/modpack_manager.sh download --profile $PROFILE_NAME
 
 # Step 4: Create server pack
 echo -e "\n[4/6] Creating server pack..."
-$SCRIPTS_DIR/modpack_manager.sh create-server-pack --profile $PROFILE_NAME --force
+PYTHONPATH="$SCRIPTS_DIR/lib:$SCRIPTS_DIR:$PYTHONPATH" $SCRIPTS_DIR/modpack_manager.sh create-server-pack --profile $PROFILE_NAME --force
 
 # Step 5: Build Docker image
 echo -e "\n[5/6] Building Docker image..."
-$SCRIPTS_DIR/docker_image_manager.sh build $PROFILE_NAME
+PYTHONPATH="$SCRIPTS_DIR/lib:$SCRIPTS_DIR:$PYTHONPATH" $SCRIPTS_DIR/docker_image_manager.sh build $PROFILE_NAME
 
 # Step 6: Start the server
 echo -e "\n[6/6] Starting Minecraft server..."
-$SCRIPTS_DIR/docker_image_manager.sh start $PROFILE_NAME
+PYTHONPATH="$SCRIPTS_DIR/lib:$SCRIPTS_DIR:$PYTHONPATH" $SCRIPTS_DIR/docker_image_manager.sh start $PROFILE_NAME
 
 echo -e "\n===== Server Started ====="
 echo "The server is now starting. This may take a few minutes, especially on first run."
@@ -94,4 +88,4 @@ echo "To stop the server: ./modpack_manager/scripts/docker_image_manager.sh stop
 # Display logs to monitor startup
 echo -e "\nShowing server logs (press Ctrl+C to exit logs but keep server running):"
 sleep 3
-$SCRIPTS_DIR/docker_image_manager.sh logs $PROFILE_NAME
+PYTHONPATH="$SCRIPTS_DIR/lib:$SCRIPTS_DIR:$PYTHONPATH" $SCRIPTS_DIR/docker_image_manager.sh logs $PROFILE_NAME

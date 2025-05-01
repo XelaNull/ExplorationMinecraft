@@ -6,8 +6,8 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 PROJECT_ROOT="$( cd "$SCRIPT_DIR/.." &> /dev/null && pwd )"
 
-# Source the PYTHONPATH setup script
-source "$SCRIPT_DIR/export_pythonpath.sh" > /dev/null
+# Set up PYTHONPATH directly
+export PYTHONPATH="$SCRIPT_DIR/lib:$SCRIPT_DIR:$PYTHONPATH"
 
 # Configuration
 PYTHON_CMD="python"  # Will be dynamically determined
